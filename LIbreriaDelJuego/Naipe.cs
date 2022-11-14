@@ -1,0 +1,95 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace LIbreriaDelJuego
+{
+    public class Naipe
+    {
+        int numeroNominal;
+        int valorEnJuego;
+        string palo;
+        bool estaJugada;
+
+
+        public Naipe(int numeroNominal, int valorEnJuego, string palo, bool estaJugada)
+        {
+            this.NumeroNominal = numeroNominal;
+            this.ValorEnJuego = valorEnJuego;
+            this.Palo = palo;
+            this.EstaJugada = estaJugada;
+
+        }
+
+        public int NumeroNominal { get => numeroNominal; set => numeroNominal = value; }
+        public int ValorEnJuego { get => valorEnJuego; set => valorEnJuego = value; }
+        public string Palo { get => palo; set => palo = value; }
+        public bool EstaJugada { get => estaJugada; set => estaJugada = value; }
+
+        public override string ToString()
+        {
+            return $" {NumeroNominal} de {Palo}";
+        }
+        public string NombreCarta(Naipe unaCarta)
+        {
+            return unaCarta.ToString();
+
+        }
+
+        public static List<Naipe> CargarCartas()
+        {
+            List<Naipe> masoACargar = new List<Naipe>();
+            masoACargar.Add(new Naipe(1, 14, "espada", false));
+            masoACargar.Add(new Naipe(2, 9, "espada", false));
+            masoACargar.Add(new Naipe(3, 10, "espada", false));
+            masoACargar.Add(new Naipe(4, 1, "espada", false));
+            masoACargar.Add(new Naipe(5, 2, "espada", false));
+            masoACargar.Add(new Naipe(6, 3, "espada", false));
+            masoACargar.Add(new Naipe(7, 12, "espada", false));
+            masoACargar.Add(new Naipe(10, 5, "espada", false));
+            masoACargar.Add(new Naipe(11, 6, "espada", false));
+            masoACargar.Add(new Naipe(12, 7, "espada", false));
+
+
+            masoACargar.Add(new Naipe(1, 13, "basto", false));
+            masoACargar.Add(new Naipe(2, 9, "basto", false));
+            masoACargar.Add(new Naipe(3, 10, "basto", false));
+            masoACargar.Add(new Naipe(4, 1, "basto", false));
+            masoACargar.Add(new Naipe(5, 2, "basto", false));
+            masoACargar.Add(new Naipe(6, 3, "basto", false));
+            masoACargar.Add(new Naipe(7, 4, "basto", false));
+            masoACargar.Add(new Naipe(10, 5, "basto", false));
+            masoACargar.Add(new Naipe(11, 6, "basto", false));
+            masoACargar.Add(new Naipe(12, 7, "basto", false));
+
+
+            masoACargar.Add(new Naipe(1, 8, "oro", false));
+            masoACargar.Add(new Naipe(2, 9, "oro", false));
+            masoACargar.Add(new Naipe(3, 10, "oro", false));
+            masoACargar.Add(new Naipe(4, 1, "oro", false));
+            masoACargar.Add(new Naipe(5, 2, "oro", false));
+            masoACargar.Add(new Naipe(6, 3, "oro", false));
+            masoACargar.Add(new Naipe(7, 4, "oro", false));
+            masoACargar.Add(new Naipe(10, 5, "oro", false));
+            masoACargar.Add(new Naipe(11, 6, "oro", false));
+            masoACargar.Add(new Naipe(12, 7, "oro", false));
+
+
+            masoACargar.Add(new Naipe(1, 8, "copa", false));
+            masoACargar.Add(new Naipe(2, 9, "copa", false));
+            masoACargar.Add(new Naipe(3, 10, "copa", false));
+            masoACargar.Add(new Naipe(4, 1, "copa", false));
+            masoACargar.Add(new Naipe(5, 2, "copa", false));
+            masoACargar.Add(new Naipe(6, 3, "copa", false));
+            masoACargar.Add(new Naipe(7, 4, "copa", false));
+            masoACargar.Add(new Naipe(10, 5, "copa", false));
+            masoACargar.Add(new Naipe(11, 6, "copa", false));
+            masoACargar.Add(new Naipe(12, 7, "copa", false));
+
+            return masoACargar;
+
+        }
+    }
+}
