@@ -28,15 +28,7 @@ namespace LIbreriaDelJuego
         public string Palo { get => palo; set => palo = value; }
         public bool EstaJugada { get => estaJugada; set => estaJugada = value; }
 
-        public override string ToString()
-        {
-            return $" {NumeroNominal} de {Palo}";
-        }
-        public string NombreCarta(Naipe unaCarta)
-        {
-            return unaCarta.ToString();
 
-        }
 
         public static List<Naipe> CargarCartas()
         {
@@ -71,7 +63,7 @@ namespace LIbreriaDelJuego
             masoACargar.Add(new Naipe(4, 1, "oro", false));
             masoACargar.Add(new Naipe(5, 2, "oro", false));
             masoACargar.Add(new Naipe(6, 3, "oro", false));
-            masoACargar.Add(new Naipe(7, 4, "oro", false));
+            masoACargar.Add(new Naipe(7, 11, "oro", false));
             masoACargar.Add(new Naipe(10, 5, "oro", false));
             masoACargar.Add(new Naipe(11, 6, "oro", false));
             masoACargar.Add(new Naipe(12, 7, "oro", false));

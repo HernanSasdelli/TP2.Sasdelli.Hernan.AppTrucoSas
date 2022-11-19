@@ -29,12 +29,22 @@ namespace LIbreriaDelJuego
         public int ContadorDeTantosJug2 { get => contadorDeTantosJug2; set => contadorDeTantosJug2 = value; }
         public int ManosJugadas { get => manosJugadas; set => manosJugadas = value; }
 
+
+
+        /// <summary>
+        /// Recibe dos Jugadores, y copia la referencia en la insancia a un jugador pie o un jugador mano
+        /// </summary>
+        /// <param name="jugador1"></param>
+        /// <param name="jugador2"></param>
+        /// <param name="orden"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>Devuelve jugador Mano o pie segun orden
         public Jugador DefinirMano(Jugador jugador1, Jugador jugador2, int orden)
         {
             //0 para devolver mano,1 para devolver el pie
             if (jugador1 != null && jugador2 != null)
             {
-                if (jugador1.EsMano == true)
+                if (jugador1.EsMano == true && jugador2.EsMano == false)
                 {
                     if (orden == 0)
                     {
@@ -44,8 +54,9 @@ namespace LIbreriaDelJuego
                     {
                         return jugador2;
                     }
+                    throw new Exception("Error!\nNo se pueden definir jugador mano y pie");
                 }
-                else if (jugador2.EsMano == true)
+                else if (jugador2.EsMano == true && jugador1.EsMano == false)
                 {
                     if (orden == 0)
                     {
@@ -55,25 +66,33 @@ namespace LIbreriaDelJuego
                     {
                         return jugador1;
                     }
+                    throw new Exception("Error!\nNo se pueden definir jugador mano y pie");
                 }
             }
-            throw new Exception("Error 404");
+            throw new Exception("Error!\nNo se pudieron cargar jugadores");
         }
 
         public void CambiarMano(Jugador jugador1, Jugador jugador2)
         {
+            if (jugador1 == null || jugador2 == null)
+            { throw new Exception("Error!\nNo se pudieron cargar jugadores"); }
+
+            if ((jugador1.EsMano == false && jugador2.EsMano == false) ||
+                (jugador1.EsMano == true && jugador2.EsMano == true))
+            { throw new Exception("Error!\nNo se pueden definir jugador mano y pie"); }
 
             if (jugador1.EsMano == true && jugador2.EsMano == false)
             {
                 jugador1.EsMano = false;
                 jugador2.EsMano = true;
             }
-
             else if (jugador1.EsMano == false && jugador2.EsMano == true)
             {
                 jugador1.EsMano = true;
                 jugador2.EsMano = false;
             }
+                
+            
         }
 
     }

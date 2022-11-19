@@ -8,5 +8,6 @@ namespace LIbreriaDelJuego
 {
     public class SalonPrincipal
     {
+        public static List<Sala> listaDeSalas2 = new List<Sala>();
     }
 }
