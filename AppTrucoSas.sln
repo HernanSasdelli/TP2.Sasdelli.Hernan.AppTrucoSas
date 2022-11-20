@@ -5,8 +5,6 @@ VisualStudioVersion = 17.1.32319.34
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LIbreriaDelJuego", "LIbreriaDelJuego\LIbreriaDelJuego.csproj", "{5735F568-0CE4-484B-94DA-68EE8A92008F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibreriaDePersistencia", "LibreriaDePersistencia\LibreriaDePersistencia.csproj", "{DA964A8D-B607-427A-A162-1F9D11EF4CBB}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FrmSalonPrincipal", "FrmSalonPrincipal\FrmSalonPrincipal.csproj", "{1AC51ED8-E0F5-4F56-9C59-D99CAF5A0F56}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FrmSalaDeJuego", "FrmSalaDeJuego\FrmSalaDeJuego.csproj", "{D50FE31A-FF6B-4AED-BB0D-D13D879E828B}"
@@ -23,10 +21,6 @@ Global
 		{5735F568-0CE4-484B-94DA-68EE8A92008F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5735F568-0CE4-484B-94DA-68EE8A92008F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5735F568-0CE4-484B-94DA-68EE8A92008F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DA964A8D-B607-427A-A162-1F9D11EF4CBB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DA964A8D-B607-427A-A162-1F9D11EF4CBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DA964A8D-B607-427A-A162-1F9D11EF4CBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DA964A8D-B607-427A-A162-1F9D11EF4CBB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1AC51ED8-E0F5-4F56-9C59-D99CAF5A0F56}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1AC51ED8-E0F5-4F56-9C59-D99CAF5A0F56}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1AC51ED8-E0F5-4F56-9C59-D99CAF5A0F56}.Release|Any CPU.ActiveCfg = Release|Any CPU

@@ -24,16 +24,27 @@ namespace LIbreriaDelJuego
                 
         public Task nuevoJuego;
 
+        public Action<string> mostrarErrores;
+        
+
+        public Action<string> mostrarTerminadas;
+
+
         public Sala()
         {
-            salaActual = nroSala++;            
-            jugador1 = new Jugador("Hernan");
-            jugador2 = new Jugador("Juanse");
+            salaActual = nroSala++;
+
             mazoDeSala = Naipe.CargarCartas();
 
-            ctSource = new CancellationTokenSource();            
+            ctSource = new CancellationTokenSource();
 
             nuevoJuego = new Task(JugarTruco);
+        }
+
+        public Sala(Action<string> mostrarErrores) :this()   
+        {
+            this.mostrarErrores = mostrarErrores;
+
         }
 
         public List<Naipe> MazoDeSala { get => mazoDeSala; set => mazoDeSala = value; }
@@ -46,20 +57,35 @@ namespace LIbreriaDelJuego
             nuevoJuego.Start();
         }
 
-
+        public void MostrarJugada(string str)
+        {
+            jugada?.Invoke(str);
+        }
         public void JugarTruco()
-        {            
+        {
+            try
             {
-                Jugador jugadorMano = new Jugador();
-                Jugador jugadorPie = new Jugador();
+                jugador1 = Jugador.LlamarUnJugador(SalonPrincipal.listaJugadores);
+                jugador2 = Jugador.LlamarUnJugador(SalonPrincipal.listaJugadores);
+                jugador1.cantar += MostrarJugada;
+                jugador2.cantar += MostrarJugada;
+            }
+            catch (Exception ex)
+            {
+                mostrarErrores($"La sala{this.salaActual} dice:\n{ex.Message}");
+            }
 
-                Partida nuevaPartida = new Partida();
-                Partida.NroIdentificadorDePartida++;
+                Jugador jugadorMano;
+                Jugador jugadorPie;
+
+                Partida nuevaPartida = new Partida(jugador1.Nombre,jugador2.Nombre);
+
 
                 int jugarALaGuerraDeCartas=0;
                 Naipe cartaMano;
                 Naipe cartaPie;
-
+            try
+            {
                 jugador1.EsMano = true;
                 int mano = 1;
                 int jugada1 =0;
@@ -92,25 +118,25 @@ namespace LIbreriaDelJuego
                                                                             if (nuevaRonda.NroMano == 1)
                                                                             {
                                                                                 Thread.Sleep(1000);
-                                                                                jugada1 = jugadorMano.CantarEnvido(26, jugadorMano.CantoEnvido, jugadorMano.CantoFlor, jugada);
+                                                                                jugada1 = jugadorMano.CantarEnvido(26, jugadorMano.CantoEnvido, jugadorMano.CantoFlor);
                                                                                 Thread.Sleep(1000);
-                                                                                jugada2 = jugadorPie.CantarEnvido(22, jugadorMano.CantoEnvido, jugadorMano.CantoFlor, jugada);
+                                                                                jugada2 = jugadorPie.CantarEnvido(22, jugadorMano.CantoEnvido, jugadorMano.CantoFlor);
 
                                                                                 if (jugada2 == 2)
                                                                                 {
                                                                                     Thread.Sleep(1000);
-                                                                                    jugada1 = jugadorMano.CantarEnvido(22, jugadorPie.CantoEnvido, jugadorPie.CantoFlor, jugada);
+                                                                                    jugada1 = jugadorMano.CantarEnvido(22, jugadorPie.CantoEnvido, jugadorPie.CantoFlor);
                                                                                 }
                                                                                 Envido.SumarPuntos(jugadorMano, jugadorPie, jugada1, jugada2, jugada);
                                                                            
                                                                                 //truco(guerra de cartas)
-                                                                                jugada1 = jugadorMano.CantarTruco(10, jugadorMano.CantoTruco, jugadorMano.QuieroTruco, jugada);
-                                                                                jugada2 = jugadorPie.CantarTruco(8, jugadorMano.CantoTruco, jugadorMano.QuieroTruco, jugada);
+                                                                                jugada1 = jugadorMano.CantarTruco(10, jugadorMano.CantoTruco, jugadorMano.QuieroTruco);
+                                                                                jugada2 = jugadorPie.CantarTruco(8, jugadorMano.CantoTruco, jugadorMano.QuieroTruco);
 
                                                                                 if (jugada2 == 2)
                                                                                 {
                                                                                     Thread.Sleep(1000);
-                                                                                    jugada1 = jugadorMano.CantarTruco(7, jugadorPie.CantoTruco, jugadorPie.QuieroTruco, jugada);
+                                                                                    jugada1 = jugadorMano.CantarTruco(7, jugadorPie.CantoTruco, jugadorPie.QuieroTruco);
                                                                                 }
                                                                             }           
 
@@ -149,14 +175,31 @@ namespace LIbreriaDelJuego
                                         if(!ctSource.Token.IsCancellationRequested && (jugadorMano.Puntaje >= 6 || jugadorPie.Puntaje >= 6))
                                         {
                                             jugada?.Invoke($"{DefinirGanador(jugadorMano, jugadorPie)} gana la partida\n");
+
+                                            jugador1.estaJugando = false;
+                                            jugador2.estaJugando = false;
+                                            mostrarTerminadas($"La Partida {nuevaPartida.partidaActual} \ntermino con {DefinirGanador(jugadorMano, jugadorPie)} de Ganador");
+                                            mostrarTerminadas($"\n--------\n");
                                         }
-                                        else if(ctSource.Token.IsCancellationRequested){ jugada?.Invoke($"Partida Cancelada\n");}
+                                        else if(ctSource.Token.IsCancellationRequested)
+                                        {
+                                            jugada?.Invoke($"Partida Cancelada\n");
+                                            jugador1.estaJugando = false;
+                                            jugador2.estaJugando = false;
+                                            mostrarTerminadas($"La partida {nuevaPartida.partidaActual} fue cancelada\n");
+                                            mostrarTerminadas($"\n--------\n");
+                                        }
 
                 } while ((jugadorMano.Puntaje < 6 && jugadorPie.Puntaje < 6) && !ctSource.Token.IsCancellationRequested);
             }
-            
+            catch (Exception ex)
+            {
+                mostrarErrores($"La partida {nuevaPartida.partidaActual} dice:\n{ex.Message}");
+            }
 
         }
+
+
         /// <summary>
         /// Cuenta los puntos de cada jugador en la guerra de cartas (truco)
         /// </summary>
@@ -197,7 +240,7 @@ namespace LIbreriaDelJuego
         /// <returns></returns>Devuelve el nombre del jugador ganador
         public string DefinirGanador(Jugador jugadorMano,Jugador jugadorPie)
         {
-            if(jugadorMano!=null && jugadorPie!=null)
+            if(jugadorMano!=null || jugadorPie!=null)
             {
                 if(jugadorMano.Nombre!=string.Empty && jugadorPie.Nombre != string.Empty)
                 {

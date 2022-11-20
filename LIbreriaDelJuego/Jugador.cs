@@ -8,7 +8,8 @@ namespace LIbreriaDelJuego
 {
     public class Jugador
     {
-        string? nombre;
+        public int id;
+        string? nombre;        
         List<Naipe> tresCarta = new List<Naipe>();
         int puntaje;
         bool esMano;
@@ -18,24 +19,23 @@ namespace LIbreriaDelJuego
         bool quieroEnvido;
         bool quieroTruco;
         int puntosPorMano;
+        public bool estaJugando;
 
         int partidosGanados;
+
+        public event Action<string> cantar;
+
 
         public Jugador()
         {
             Puntaje = 0;
-            EsMano = false;
-            CantoEnvido = false;
-            CantoTruco = false;
-            QuieroEnvido = false;
-            QuieroTruco = false;
-            CantoFlor = false;
-            PuntosPorMano = 0;
+            PuntosPorMano = 0;            
         }
-        public Jugador(string nombre) : this()
+        public Jugador(int id, string nombre,int partidosGanados) : this()
         {
+            this.id = id;
             this.nombre = nombre;
-
+            this.partidosGanados = partidosGanados;
         }
 
         public List<Naipe> TresCarta { get => tresCarta; set => tresCarta = value; }
@@ -51,7 +51,7 @@ namespace LIbreriaDelJuego
         public int PartidosGanados { get => partidosGanados; set => partidosGanados = value; }
 
         public int CantarEnvido( int conveniencia,
-            bool seCantoEnvido, bool seCantoFlor, Action<string>? jugada)
+            bool seCantoEnvido, bool seCantoFlor)
         {
             int retorno = 0;
 
@@ -59,7 +59,7 @@ namespace LIbreriaDelJuego
             if (envido == -1)
             {
                 CantoFlor = true;
-                jugada?.Invoke($"{Nombre} canto Flor\n");
+                cantar?.Invoke($"{Nombre} canto Flor\n");
 
                 retorno = -1;
             }
@@ -69,21 +69,22 @@ namespace LIbreriaDelJuego
                 {
                     CantoEnvido = true;
 
-                   jugada?.Invoke($"{Nombre} Canta Envido\n");
-
+                    cantar?.Invoke($"{Nombre} Canta Envido\n");
+ 
                     if (EsMano == true) { retorno = 1; } else { retorno = 2; }
                 }
                 else if (envido > conveniencia && seCantoEnvido == true)
                 {
                     CantoEnvido = true;
-                   jugada?.Invoke($"{Nombre} Dice Quiero\n");
+                    cantar?.Invoke($"{Nombre} Dice Quiero\n");
+
 
                     retorno = 1;
                 }
                 else if (envido < conveniencia && seCantoEnvido == true)
                 {
                     CantoEnvido = false;
-                   jugada?.Invoke($"{Nombre} Dice No Quiero\n");
+                    cantar?.Invoke($"{Nombre} Dice No Quiero\n");
 
                     retorno = -2;
                 }
@@ -107,13 +108,12 @@ namespace LIbreriaDelJuego
         /// <param name="conveniencia"></param>
         /// <param name="seCantoTruco"></param>
         /// <param name="quizoTruco"></param>
-        /// <param name="jugada"></param>
         /// <returns></returns>int que representa el movimiento
         /// (1y2) para cantar truco, jugador mano y jugador pie respectivamente, 1 para querer truco
         /// (-1) truco no querido
         /// (0) si se pasa la jugada sin cantar
         /// 
-        public int CantarTruco(int conveniencia,bool seCantoTruco, bool quizoTruco, Action<string>? jugada)
+        public int CantarTruco(int conveniencia,bool seCantoTruco, bool quizoTruco)
         {
             Naipe cartaMasAlta = ConsultarLaCartaMasAltaEnJuego();
             if (seCantoTruco==false && quizoTruco == false)            
@@ -122,7 +122,8 @@ namespace LIbreriaDelJuego
                 {
                     seCantoTruco=true;
                     CantoTruco = true;
-                    jugada?.Invoke($"El jugador {Nombre}, canto Truco\n");
+                    cantar?.Invoke($"El jugador {Nombre}, canto Truco\n");
+
                     if (EsMano == true) { return 1; } else return 2;
                 }
             }
@@ -132,12 +133,12 @@ namespace LIbreriaDelJuego
                 {
                     quizoTruco = true;
                     QuieroTruco = true;
-                    jugada?.Invoke($"El jugador {Nombre}, dice quiero\n");
+                    cantar?.Invoke($"El jugador {Nombre}, dice quiero\n");
                     return 1;
                 }
                 else
                 {
-                    jugada?.Invoke($"El jugador {Nombre}, no quiero\n");
+                    cantar?.Invoke($"El jugador {Nombre}, no quiero\n");
                     return -1;
                 }
             }
@@ -182,6 +183,28 @@ namespace LIbreriaDelJuego
                 }            
             }
             throw (new Exception("ERROR!,Se quedo sin cartas, o es null, o mal el maso\n"));
+        }
+        /// <summary>
+        /// Recibe una lista de jugadores precargados, y devuelve un jugador, que no se encuentre en juego
+        /// </summary>
+        /// <param name="listaDeJugadores"></param>
+        /// <returns></returns>Un Jugador que no este jugando
+        /// <exception cref="Exception"></exception>
+        public static Jugador LlamarUnJugador(List<Jugador> listaDeJugadores)
+        {
+            if(listaDeJugadores!=null && listaDeJugadores.Count()>0)
+            {
+                foreach(Jugador unJugador in listaDeJugadores)
+                {
+                    if(unJugador.estaJugando == false)
+                    {
+                        unJugador.estaJugando = true;
+                        return unJugador;                    
+                    }                    
+                }
+                throw new Exception("Error!\nNo hay Jugadores disponibles");
+            }
+            throw new Exception("Error!\nNo encontro lista de jugadores");
         }
 
     }

@@ -33,13 +33,16 @@
             this.dtg_listaSalas = new System.Windows.Forms.DataGridView();
             this.label1 = new System.Windows.Forms.Label();
             this.lbl_error = new System.Windows.Forms.Label();
+            this.rtb_mostrarPartidasTerminadas = new System.Windows.Forms.RichTextBox();
+            this.lbl_partidasTerminadas = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dtg_listaSalas)).BeginInit();
             this.SuspendLayout();
             // 
             // btn_crearNuevaSala
             // 
             this.btn_crearNuevaSala.BackColor = System.Drawing.Color.DeepSkyBlue;
-            this.btn_crearNuevaSala.Location = new System.Drawing.Point(148, 356);
+            this.btn_crearNuevaSala.Location = new System.Drawing.Point(150, 344);
             this.btn_crearNuevaSala.Name = "btn_crearNuevaSala";
             this.btn_crearNuevaSala.Size = new System.Drawing.Size(149, 56);
             this.btn_crearNuevaSala.TabIndex = 0;
@@ -50,6 +53,7 @@
             // dtg_listaSalas
             // 
             this.dtg_listaSalas.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
+            this.dtg_listaSalas.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dtg_listaSalas.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.dtg_listaSalas.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.Disable;
             this.dtg_listaSalas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -77,15 +81,45 @@
             // lbl_error
             // 
             this.lbl_error.BackColor = System.Drawing.Color.White;
-            this.lbl_error.Font = new System.Drawing.Font("Serif Gothic Black", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lbl_error.Font = new System.Drawing.Font("Serif Gothic Black", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.lbl_error.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.lbl_error.Location = new System.Drawing.Point(108, 415);
+            this.lbl_error.Location = new System.Drawing.Point(93, 403);
             this.lbl_error.Name = "lbl_error";
-            this.lbl_error.Size = new System.Drawing.Size(267, 60);
+            this.lbl_error.Size = new System.Drawing.Size(267, 72);
             this.lbl_error.TabIndex = 3;
             this.lbl_error.Text = "Errores";
             this.lbl_error.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.lbl_error.Visible = false;
+            // 
+            // rtb_mostrarPartidasTerminadas
+            // 
+            this.rtb_mostrarPartidasTerminadas.Location = new System.Drawing.Point(454, 80);
+            this.rtb_mostrarPartidasTerminadas.Name = "rtb_mostrarPartidasTerminadas";
+            this.rtb_mostrarPartidasTerminadas.Size = new System.Drawing.Size(306, 156);
+            this.rtb_mostrarPartidasTerminadas.TabIndex = 4;
+            this.rtb_mostrarPartidasTerminadas.Text = "";
+            // 
+            // lbl_partidasTerminadas
+            // 
+            this.lbl_partidasTerminadas.AutoSize = true;
+            this.lbl_partidasTerminadas.BackColor = System.Drawing.Color.White;
+            this.lbl_partidasTerminadas.Font = new System.Drawing.Font("Serif Gothic Black", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lbl_partidasTerminadas.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.lbl_partidasTerminadas.Location = new System.Drawing.Point(473, 36);
+            this.lbl_partidasTerminadas.Name = "lbl_partidasTerminadas";
+            this.lbl_partidasTerminadas.Size = new System.Drawing.Size(264, 31);
+            this.lbl_partidasTerminadas.TabIndex = 5;
+            this.lbl_partidasTerminadas.Text = "Partidas Terminadas";
+            // 
+            // button1
+            // 
+            this.button1.BackColor = System.Drawing.Color.DeepSkyBlue;
+            this.button1.Location = new System.Drawing.Point(531, 344);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(149, 56);
+            this.button1.TabIndex = 6;
+            this.button1.Text = "Estadisticas";
+            this.button1.UseVisualStyleBackColor = false;
             // 
             // frm_salon
             // 
@@ -93,13 +127,17 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Firebrick;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
-            this.ClientSize = new System.Drawing.Size(863, 484);
+            this.ClientSize = new System.Drawing.Size(843, 484);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.lbl_partidasTerminadas);
+            this.Controls.Add(this.rtb_mostrarPartidasTerminadas);
             this.Controls.Add(this.lbl_error);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.dtg_listaSalas);
             this.Controls.Add(this.btn_crearNuevaSala);
             this.Name = "frm_salon";
-            this.Text = "Form1";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Truco SAS";
             this.Load += new System.EventHandler(this.frm_salon_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dtg_listaSalas)).EndInit();
             this.ResumeLayout(false);
@@ -113,5 +151,8 @@
         private DataGridView dtg_listaSalas;
         private Label label1;
         private Label lbl_error;
+        private RichTextBox rtb_mostrarPartidasTerminadas;
+        private Label lbl_partidasTerminadas;
+        private Button button1;
     }
 }

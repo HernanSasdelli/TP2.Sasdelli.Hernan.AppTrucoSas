@@ -9,25 +9,39 @@ namespace LIbreriaDelJuego
     public class Partida
     {
 
-        private static int nroIdentificadorDePartida = 0;
+        public static int ultimaPartida=0;
+        public int partidaActual;
+        public Action<string> mostrarTerminadas;
+
         private int contadorDeTantosJug1;
         private int contadorDeTantosJug2;
         private int manosJugadas;
-
+        public string nombreJugador1;
+        public string nombreJugador2;
 
 
         public Partida()
         {
-            NroIdentificadorDePartida++;
+
+            partidaActual = ultimaPartida+1;
+            ultimaPartida = partidaActual;
             ManosJugadas = 0;
             ContadorDeTantosJug1 = 0;
             ContadorDeTantosJug2 = 0;
         }
+        public Partida(string nombreJugador1, string nombreJugador2) : this()
+        {
+            this.nombreJugador1 = nombreJugador1;
+            this.nombreJugador2 = nombreJugador2;
 
-        public static int NroIdentificadorDePartida { get => nroIdentificadorDePartida; set => nroIdentificadorDePartida = value; }
+        }
+
         public int ContadorDeTantosJug1 { get => contadorDeTantosJug1; set => contadorDeTantosJug1 = value; }
         public int ContadorDeTantosJug2 { get => contadorDeTantosJug2; set => contadorDeTantosJug2 = value; }
         public int ManosJugadas { get => manosJugadas; set => manosJugadas = value; }
+
+
+
 
 
 

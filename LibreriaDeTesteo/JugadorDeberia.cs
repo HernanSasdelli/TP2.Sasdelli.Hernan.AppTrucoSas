@@ -119,5 +119,47 @@ namespace LibreriaDeTesteo
 
         }
 
+
+        [TestMethod]
+        public void LlamarUnJugadorCorrectamente()
+        {
+            List<Jugador> listaDeJugadores = new List<Jugador>();
+
+
+            listaDeJugadores.Add(new Jugador(1,"juanse",35));
+            listaDeJugadores.Add(new Jugador(2, "peperina", 385));
+
+            listaDeJugadores[0].estaJugando = true;
+            
+            Jugador retorno = Jugador.LlamarUnJugador(listaDeJugadores);
+            Assert.AreEqual(listaDeJugadores[1], retorno);
+
+        }
+
+        [ExpectedException(typeof(Exception))]
+        [TestMethod]
+        public void LlamarUnJugadorSinDisponibles()
+        {
+            List<Jugador> listaDeJugadores = new List<Jugador>();
+
+
+            listaDeJugadores.Add(new Jugador(1, "juanse", 35));
+            listaDeJugadores.Add(new Jugador(2, "peperina", 385));
+
+            listaDeJugadores[0].estaJugando = true;
+            listaDeJugadores[1].estaJugando = true;
+
+            _ = Jugador.LlamarUnJugador(listaDeJugadores);
+
+        }
+        [ExpectedException(typeof(Exception))]
+        [TestMethod]
+        public void LlamarUnJugadorListaVacia()
+        {
+            List<Jugador> listaDeJugadores = new List<Jugador>();
+
+            _ = Jugador.LlamarUnJugador(listaDeJugadores);
+
+        }
     }
 }

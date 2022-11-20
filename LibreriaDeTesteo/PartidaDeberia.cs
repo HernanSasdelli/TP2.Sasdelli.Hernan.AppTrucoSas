@@ -21,7 +21,7 @@ namespace LibreriaDeTesteo
         {
             Jugador nuevoJugador1 = new Jugador();
             Jugador nuevoJugador2 = new Jugador();
-            Partida partida = new Partida();
+            Partida partida = new Partida(nuevoJugador1.Nombre, nuevoJugador2.Nombre);
 
             _ = partida.DefinirMano(nuevoJugador1, nuevoJugador2, -1);
         }
@@ -32,7 +32,7 @@ namespace LibreriaDeTesteo
         {
             Jugador nuevoJugador1 = null; 
             Jugador nuevoJugador2 = new Jugador();
-            Partida partida = new Partida();
+            Partida partida = new Partida(nuevoJugador1.Nombre, nuevoJugador2.Nombre);
 
             _ = partida.DefinirMano(nuevoJugador1, nuevoJugador2, 0);
         }
@@ -44,7 +44,7 @@ namespace LibreriaDeTesteo
         {
             Jugador nuevoJugador1 = new Jugador();
             Jugador nuevoJugador2 = null;
-            Partida partida = new Partida();
+            Partida partida = new Partida(nuevoJugador1.Nombre, nuevoJugador2.Nombre);
 
             _ = partida.DefinirMano(nuevoJugador1, nuevoJugador2, 0);
         }
@@ -56,9 +56,9 @@ namespace LibreriaDeTesteo
             Jugador nuevoJugador1 = new Jugador();
             Jugador nuevoJugador2 = new Jugador();
 
-            Partida partida = new Partida();
+            Partida partida = new (nuevoJugador1.Nombre, nuevoJugador2.Nombre);
 
-           _ = partida.DefinirMano(nuevoJugador1, nuevoJugador2, 0);
+            _ = partida.DefinirMano(nuevoJugador1, nuevoJugador2, 0);
         }
 
 
@@ -71,7 +71,7 @@ namespace LibreriaDeTesteo
             nuevoJugador1.EsMano = true;
             nuevoJugador2.EsMano = true;
 
-            Partida partida = new Partida();
+            Partida partida = new Partida(nuevoJugador1.Nombre, nuevoJugador2.Nombre);
 
             _ = partida.DefinirMano(nuevoJugador1, nuevoJugador2, 0);
         }
@@ -85,7 +85,7 @@ namespace LibreriaDeTesteo
             nuevoJugador1.EsMano = true;
             nuevoJugador2.EsMano = false;
 
-            Partida partida = new Partida();
+            Partida partida = new Partida(nuevoJugador1.Nombre, nuevoJugador2.Nombre);
 
             Jugador jugadorMano = partida.DefinirMano(nuevoJugador1, nuevoJugador2, 0);
             Jugador jugadorPie = partida.DefinirMano(nuevoJugador1, nuevoJugador2, 1);
@@ -106,7 +106,7 @@ namespace LibreriaDeTesteo
             nuevoJugador1.EsMano = true;
             nuevoJugador2.EsMano = false;
 
-            Partida partida = new Partida();
+            Partida partida = new Partida(nuevoJugador1.Nombre, nuevoJugador2.Nombre);
 
             partida.CambiarMano(nuevoJugador1, nuevoJugador2);           
 
@@ -123,7 +123,7 @@ namespace LibreriaDeTesteo
             nuevoJugador1.EsMano = true;
             nuevoJugador2.EsMano = true;
 
-            Partida partida = new Partida();
+            Partida partida = new Partida(nuevoJugador1.Nombre, nuevoJugador2.Nombre);
 
             partida.CambiarMano(nuevoJugador1, nuevoJugador2);
         }
@@ -137,7 +137,7 @@ namespace LibreriaDeTesteo
             nuevoJugador1.EsMano = false;
             nuevoJugador2.EsMano = false;
 
-            Partida partida = new Partida();
+            Partida partida = new Partida(nuevoJugador1.Nombre, nuevoJugador2.Nombre);
 
             partida.CambiarMano(nuevoJugador1, nuevoJugador2);
         }
@@ -149,7 +149,7 @@ namespace LibreriaDeTesteo
             Jugador nuevoJugador1 = null;
             Jugador nuevoJugador2 = null;
 
-            Partida partida = new Partida();
+            Partida partida = new Partida(nuevoJugador1.Nombre, nuevoJugador2.Nombre);
 
             partida.CambiarMano(nuevoJugador1, nuevoJugador2);
         }

@@ -31,12 +31,6 @@ namespace FrmSalaDeJuego
             lbl_mostrarPartida.Text =$"Sala {salaRecibida.salaActual.ToString()}";
         }
 
-
-        private void rtb_mostrarJugadas_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void ActualizarRchTexbox(string texto)
         {
             if (this.rtb_mostrarJugadas.InvokeRequired)
@@ -44,8 +38,7 @@ namespace FrmSalaDeJuego
                 this.rtb_mostrarJugadas.BeginInvoke((MethodInvoker)delegate ()
                 {
                     rtb_mostrarJugadas.AppendText(texto);
-                });
-                
+                });                
             }
         }
 

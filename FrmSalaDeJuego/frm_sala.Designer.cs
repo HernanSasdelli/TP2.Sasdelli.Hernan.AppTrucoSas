@@ -57,7 +57,6 @@
             this.rtb_mostrarJugadas.TabIndex = 1;
             this.rtb_mostrarJugadas.Text = "";
             this.rtb_mostrarJugadas.UseWaitCursor = true;
-            this.rtb_mostrarJugadas.TextChanged += new System.EventHandler(this.rtb_mostrarJugadas_TextChanged);
             // 
             // lbl_mostrarPartida
             // 

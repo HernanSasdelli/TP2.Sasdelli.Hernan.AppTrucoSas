@@ -96,8 +96,8 @@ namespace LibreriaDeTesteo
         [TestMethod]
         public void DefinirGanadorCorrectamente()
         {
-            Jugador jugadorMano = new Jugador("Pepe");
-            Jugador jugadorPie = new Jugador("Pepa");
+            Jugador jugadorMano = new Jugador(01,"Pepe",35);
+            Jugador jugadorPie = new Jugador(02,"Pepa",36);
             jugadorMano.PuntosPorMano++;
 
             Sala sala = new Sala();
@@ -110,17 +110,31 @@ namespace LibreriaDeTesteo
         }
 
 
-        [DataRow("","")]
-        [DataRow(null,null)]
-        [DataRow("", null)]
-        [DataRow(null,"")]
+        [DataRow(20, "", 10, 5, "", 20)]
+        [DataRow(20, null, 10, 5, null, 20)]
+        [DataRow(20,"",10,5,null,20)]
+        [DataRow(20,null,10,5,"",20)]
         [ExpectedException(typeof(Exception))]
         [TestMethod]
-        public void DefinirGanadorNombresVacios(string nombre1, string nombre2)
+        public void DefinirGanadorNombresVacios(int id1, string nombre1,int parGan1, int id2,string nombre2, int parGan2)
         {
-            Jugador jugadorMano = new Jugador(nombre1);
-            Jugador jugadorPie = new Jugador(nombre2);
+            Jugador jugadorMano = new Jugador(id1,nombre1,parGan1);
+            Jugador jugadorPie = new Jugador(id2, nombre2, parGan2);
             jugadorMano.PuntosPorMano++;
+
+            Sala sala = new Sala();
+
+            _ = sala.DefinirGanador(jugadorMano, jugadorPie);
+
+        }
+
+        [ExpectedException(typeof(Exception))]
+        [TestMethod]
+        public void DefinirGanadorJugadoresNull()
+        {
+            Jugador jugadorMano = null;
+            Jugador jugadorPie = null;
+            
 
             Sala sala = new Sala();
 

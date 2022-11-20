@@ -5,7 +5,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Xml.Serialization;
 
-namespace LibreriaDePersistencia
+namespace LIbreriaDelJuego
 {
     public class JsonSerializadora <T>
     {
@@ -34,7 +34,7 @@ namespace LibreriaDePersistencia
                 };
                 string objetoJson = JsonSerializer.Serialize(datos, options);
 
-                File.WriteAllText(rutaCompleta, objetoJson);
+                File.AppendAllText(rutaCompleta, objetoJson);
             }
             throw new Exception("ERROR!\nRuta Incorrecta");
         }
@@ -71,5 +71,5 @@ namespace LibreriaDePersistencia
 
 
 
-    }
+    
 }

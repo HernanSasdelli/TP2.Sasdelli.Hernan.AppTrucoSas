@@ -1,13 +1,15 @@
 using FrmSalaDeJuego;
 using LIbreriaDelJuego;
 using System.Collections.Generic;
+using System.Data;
 
 namespace FrmSalonPrincipal
 {
     
     public partial class frm_salon : Form
     {
-        Action<string> action;
+        Action<string> mostrarErrores;
+        
 
         private void ActualizarErrorLabel(string texto)
         {
@@ -17,9 +19,7 @@ namespace FrmSalonPrincipal
                 {
                     lbl_error.Visible = true;
                     lbl_error.Text = texto;
-
                 });
-
             }
         }
         public frm_salon()
@@ -29,22 +29,19 @@ namespace FrmSalonPrincipal
 
         private void btn_crearNuevaSala_Click(object sender, EventArgs e)
         {
-
+            lbl_error.Visible=false;
                 dtg_listaSalas.DataSource = null;
 
-                Sala nuevaSala = new Sala();           
+                Sala nuevaSala = new Sala(mostrarErrores);
+            nuevaSala.mostrarTerminadas += ActualizarRchTexboxSalon;
                 SalonPrincipal.listaDeSalas2.Add(nuevaSala);
 
-                ///foreach bool de la sala/actualizardata(lista) filtar antes
-                /////cuando termina la partida se actualiza datagris evento
-         
-                dtg_listaSalas.DataSource = SalonPrincipal.listaDeSalas2;
+            ///foreach bool de la sala/actualizardata(lista) filtar antes
+            /////cuando termina la partida se actualiza datagris evento
 
-                nuevaSala.IniciarPartida();
-
-
-
-
+            //TitulosDePartidas(SalonPrincipal.listaDeSalas2);
+            dtg_listaSalas.DataSource = SalonPrincipal.listaDeSalas2;
+               nuevaSala.IniciarPartida();
         }
 
         private void dtg_listaSalas_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -56,16 +53,24 @@ namespace FrmSalonPrincipal
 
         }
 
-
         private void frm_salon_Load(object sender, EventArgs e)
         {
+            mostrarErrores = ActualizarErrorLabel;
+
 
         }
 
 
-        /* Task instanciarNuevaSala = Task.Run(() => {
-             frm_sala paño = new frm_sala();
-             paño.ShowDialog();
-         });*/
+        private void ActualizarRchTexboxSalon(string texto)
+        {
+            if (this.rtb_mostrarPartidasTerminadas.InvokeRequired)
+            {
+                this.rtb_mostrarPartidasTerminadas.BeginInvoke((MethodInvoker)delegate ()
+                {
+                    rtb_mostrarPartidasTerminadas.AppendText(texto);
+                });
+            }
+        }
     }
+
 }
