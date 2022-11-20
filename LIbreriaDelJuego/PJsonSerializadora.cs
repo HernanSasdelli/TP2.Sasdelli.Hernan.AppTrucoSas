@@ -7,22 +7,21 @@ using System.Xml.Serialization;
 
 namespace LIbreriaDelJuego
 {
-    public class JsonSerializadora <T>
+    public class PJsonSerializadora <T>:PISerializadoraGenerica<T> where T : class, new()
     {
         static string rutaArchivo;
 
-        static JsonSerializadora()
+        static PJsonSerializadora()
         {
-            rutaArchivo = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            rutaArchivo += @"/Archivos-Serializacion";
+            rutaArchivo = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) +@"/Archivos-Persistencia";            
         }
 
 
-        public static void EscribirJSON(T datos, string archivo)
+        public  void Escribir(T datos, string nombreArchivo)
         {
-            if(datos != null && archivo != null && archivo!=string.Empty)
-            {
-                string rutaCompleta = rutaArchivo + @"/SerializadoraJSON" + archivo + ".json";
+            string rutaCompleta = rutaArchivo + @"/JsonSerializadora" + nombreArchivo + ".json";
+            if (datos != null && nombreArchivo != null && nombreArchivo != string.Empty)
+            {              
 
                 if (!Directory.Exists(rutaArchivo))
                 {
@@ -34,17 +33,21 @@ namespace LIbreriaDelJuego
                 };
                 string objetoJson = JsonSerializer.Serialize(datos, options);
 
-                File.AppendAllText(rutaCompleta, objetoJson);
+                File.WriteAllText(rutaCompleta, objetoJson);
             }
-            throw new Exception("ERROR!\nRuta Incorrecta");
+            else
+            {
+                throw new Exception($"ERROR!\nRuta{rutaCompleta}Incorrecta");
+            }
+            
         }
 
-        public static T LeerJSON(string nombre)
+        public T Leer(string nombreArchivo)
         {
-            if(string.IsNullOrEmpty(nombre))
+            string rutaCompleta = rutaArchivo + @"/JsonSerializadora" + nombreArchivo + ".json";
+            if (!string.IsNullOrEmpty(nombreArchivo))
             {
-                T objeto = default;
-                string rutaCompleta = rutaArchivo + @"/SerializadoraJSON" + nombre + ".json";
+                T objeto = default;                
 
                 if (!Directory.Exists(rutaArchivo))
                 {
@@ -60,8 +63,12 @@ namespace LIbreriaDelJuego
                 objeto = JsonSerializer.Deserialize<T>(archivoJson, options);
 
                 return objeto;
-            }       
-            throw new Exception("ERROR!\nRuta Incorrecta");
+            }
+            else
+            {
+                throw new Exception($"ERROR!\nRuta{rutaCompleta}Incorrecta");
+            }
+           
         }
          
     }

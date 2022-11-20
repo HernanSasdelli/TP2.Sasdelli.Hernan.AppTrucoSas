@@ -102,9 +102,9 @@ namespace LibreriaDeTesteo
 
             Sala sala = new Sala();
 
-            string nombreGanador = sala.DefinirGanador(jugadorMano, jugadorPie);
+            Jugador ganador = sala.DefinirGanador(jugadorMano, jugadorPie);
 
-            Assert.AreEqual(nombreGanador, jugadorMano.Nombre);
+            Assert.AreEqual(ganador, jugadorMano);
             Assert.AreEqual(1, jugadorMano.PuntosPorMano);
 
         }

@@ -9,16 +9,16 @@ namespace LIbreriaDelJuego
     public class Jugador
     {
         public int id;
-        string? nombre;        
-        List<Naipe> tresCarta = new List<Naipe>();
-        int puntaje;
-        bool esMano;
-        bool cantoEnvido;
-        bool cantoTruco;
-        bool cantoFlor;
-        bool quieroEnvido;
-        bool quieroTruco;
-        int puntosPorMano;
+        public string? nombre;
+        public List<Naipe> tresCarta = new List<Naipe>();
+        public int puntaje;
+        public bool esMano;
+        public bool cantoEnvido;
+        public bool cantoTruco;
+        public bool cantoFlor;
+        public bool quieroEnvido;
+        public bool quieroTruco;
+        public int puntosPorMano;
         public bool estaJugando;
 
         int partidosGanados;
@@ -28,14 +28,15 @@ namespace LIbreriaDelJuego
 
         public Jugador()
         {
-            Puntaje = 0;
-            PuntosPorMano = 0;            
+       
         }
         public Jugador(int id, string nombre,int partidosGanados) : this()
         {
             this.id = id;
             this.nombre = nombre;
             this.partidosGanados = partidosGanados;
+            Puntaje = 0;
+            PuntosPorMano = 0;
         }
 
         public List<Naipe> TresCarta { get => tresCarta; set => tresCarta = value; }
@@ -100,6 +101,31 @@ namespace LIbreriaDelJuego
             QuieroTruco = false;
             CantoFlor = false;
             PuntosPorMano = 0;
+        }
+
+        public static void ResetearJugadores(Jugador j1, Jugador j2)
+        {
+            if (j1 == null || j2 == null)
+                throw new Exception("Error!\nJugadores no existen");
+            j1.CantoEnvido = false;
+            j1.CantoTruco = false;
+            j1.QuieroEnvido = false;
+            j1.QuieroTruco = false;
+            j1.CantoFlor = false;
+            j1.PuntosPorMano = 0;
+            j1.puntaje = 0;
+            j1.estaJugando = false;
+            j1.esMano = false; 
+            j2.CantoEnvido = false;
+            j2.CantoTruco = false;
+            j2.QuieroEnvido = false;
+            j2.QuieroTruco = false;
+            j2.CantoFlor = false;
+            j2.PuntosPorMano = 0;
+            j2.puntaje = 0;
+            j2.estaJugando = false;
+            j2.esMano = false;
+
         }
         /// <summary>
         /// Administra la jugada, canta truco y lo responde, lo escribe a traves de un delegado Action
@@ -182,7 +208,10 @@ namespace LIbreriaDelJuego
                     }
                 }            
             }
-            throw (new Exception("ERROR!,Se quedo sin cartas, o es null, o mal el maso\n"));
+
+                throw (new Exception("ERROR!,Se quedo sin cartas, o es null, o mal el maso\n"));
+             
+            
         }
         /// <summary>
         /// Recibe una lista de jugadores precargados, y devuelve un jugador, que no se encuentre en juego

@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="LIbreriaDelJuego.Envido">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAABAAAAAAAAAACgAAABAAAAAAAAAAAAUAAQAAA=</HashCode>
+      <FileName>Envido.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LIbreriaDelJuego.Jugador">
+    <Position X="5.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgACAAIAAACIAAAAwIBIAI2AQAEMGEEBAABAAok=</HashCode>
+      <FileName>Jugador.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LIbreriaDelJuego.Naipe">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAQAAAgAAQAAAAFAAAAQAAAAEAAAAAAAAAAAAAKE=</HashCode>
+      <FileName>Naipe.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LIbreriaDelJuego.Partida">
+    <Position X="2.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgQAAAAAAAAAAEAAAgAAIABBACAAIABAAAAAAgIEAA=</HashCode>
+      <FileName>Partida.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LIbreriaDelJuego.PConexionSQL">
+    <Position X="11" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAEAAAAAAAAAAAAAAAAAEAAAAAgAAAAAAAAAAAAEA=</HashCode>
+      <FileName>PConexionSQL.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LIbreriaDelJuego.PJsonSerializadora&lt;T&gt;">
+    <Position X="9.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAACAAAA=</HashCode>
+      <FileName>PJsonSerializadora.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="LIbreriaDelJuego.PXmlSerializadora&lt;T&gt;">
+    <Position X="11" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAACAAAA=</HashCode>
+      <FileName>PXmlSerializadora.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="LIbreriaDelJuego.Ronda">
+    <Position X="0.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAgAAAAAEAAAAAAAAAAAAAAQAAAIBAAAAAAAAAAIA=</HashCode>
+      <FileName>Ronda.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LIbreriaDelJuego.Sala">
+    <Position X="7.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAAAAAAQABEAAAAhsQDBIAIgAAAAAAEAEAIAAA=</HashCode>
+      <FileName>Sala.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LIbreriaDelJuego.SalonPrincipal">
+    <Position X="9.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAggCAAAAAAAAAIAAAAAAAAAAAAAAAQA=</HashCode>
+      <FileName>SalonPrincipal.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LIbreriaDelJuego.Truco">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAQAAAgAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Truco.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="LIbreriaDelJuego.PISerializadoraGenerica&lt;T&gt;">
+    <Position X="9.25" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>PISerializadoraGenerica.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

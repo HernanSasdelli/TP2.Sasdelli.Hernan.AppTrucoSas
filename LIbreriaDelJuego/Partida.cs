@@ -8,7 +8,6 @@ namespace LIbreriaDelJuego
 {
     public class Partida
     {
-
         public static int ultimaPartida=0;
         public int partidaActual;
         public Action<string> mostrarTerminadas;
@@ -22,7 +21,6 @@ namespace LIbreriaDelJuego
 
         public Partida()
         {
-
             partidaActual = ultimaPartida+1;
             ultimaPartida = partidaActual;
             ManosJugadas = 0;
@@ -33,7 +31,6 @@ namespace LIbreriaDelJuego
         {
             this.nombreJugador1 = nombreJugador1;
             this.nombreJugador2 = nombreJugador2;
-
         }
 
         public int ContadorDeTantosJug1 { get => contadorDeTantosJug1; set => contadorDeTantosJug1 = value; }
@@ -68,7 +65,7 @@ namespace LIbreriaDelJuego
                     {
                         return jugador2;
                     }
-                    throw new Exception("Error!\nNo se pueden definir jugador mano y pie");
+
                 }
                 else if (jugador2.EsMano == true && jugador1.EsMano == false)
                 {
@@ -80,10 +77,15 @@ namespace LIbreriaDelJuego
                     {
                         return jugador1;
                     }
-                    throw new Exception("Error!\nNo se pueden definir jugador mano y pie");
+                    
                 }
+                throw new Exception("Error!\nNo se pueden definir jugador mano y pie");
             }
-            throw new Exception("Error!\nNo se pudieron cargar jugadores");
+            else
+            {
+                throw new Exception("Error!\nNo se pudieron cargar jugadores");
+            }
+            
         }
 
         public void CambiarMano(Jugador jugador1, Jugador jugador2)

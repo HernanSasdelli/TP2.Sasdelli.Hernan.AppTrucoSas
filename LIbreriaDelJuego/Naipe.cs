@@ -14,7 +14,12 @@ namespace LIbreriaDelJuego
         bool estaJugada;
 
 
-        public Naipe(int numeroNominal, int valorEnJuego, string palo, bool estaJugada)
+        public Naipe()
+        {
+
+
+        }
+        public Naipe(int numeroNominal, int valorEnJuego, string palo, bool estaJugada):this()
         {
             this.NumeroNominal = numeroNominal;
             this.ValorEnJuego = valorEnJuego;
@@ -28,7 +33,41 @@ namespace LIbreriaDelJuego
         public string Palo { get => palo; set => palo = value; }
         public bool EstaJugada { get => estaJugada; set => estaJugada = value; }
 
+        public static void SerializarCartas()
+        {
+            int numeroDeCarta = 0;
+            string carta;
+            List<Naipe> listaDeCartas = new List<Naipe>();
+            listaDeCartas = Naipe.CargarCartas();
+           
+           PISerializadoraGenerica<Naipe> guardarLosNaipes = new PJsonSerializadora<Naipe>();
+           foreach(Naipe unNaipe in listaDeCartas)
+           {
+                numeroDeCarta++;
+                carta = "cartaNro" + numeroDeCarta.ToString();
+                guardarLosNaipes.Escribir(unNaipe, carta);
 
+           }
+         
+
+        }        
+        public static List<Naipe> DeserealizarCartas()
+        {
+            string carta;
+
+            List<Naipe> listaDeCartas = new List<Naipe>();
+
+            for(int i = 1; i < 41; i++)
+            {
+                PISerializadoraGenerica<Naipe> recuperar = new PJsonSerializadora<Naipe>();
+                carta = "cartaNro" + i.ToString();
+                Naipe naipe = recuperar.Leer(carta);
+                
+                listaDeCartas.Add(naipe);
+            }
+
+            return listaDeCartas;
+        }
 
         public static List<Naipe> CargarCartas()
         {

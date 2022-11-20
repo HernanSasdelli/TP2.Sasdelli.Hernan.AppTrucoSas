@@ -32,7 +32,7 @@ namespace LibreriaDeTesteo
         {
             Jugador nuevoJugador1 = null; 
             Jugador nuevoJugador2 = new Jugador();
-            Partida partida = new Partida(nuevoJugador1.Nombre, nuevoJugador2.Nombre);
+            Partida partida = new Partida();
 
             _ = partida.DefinirMano(nuevoJugador1, nuevoJugador2, 0);
         }
@@ -44,7 +44,7 @@ namespace LibreriaDeTesteo
         {
             Jugador nuevoJugador1 = new Jugador();
             Jugador nuevoJugador2 = null;
-            Partida partida = new Partida(nuevoJugador1.Nombre, nuevoJugador2.Nombre);
+            Partida partida = new Partida();
 
             _ = partida.DefinirMano(nuevoJugador1, nuevoJugador2, 0);
         }
@@ -56,7 +56,7 @@ namespace LibreriaDeTesteo
             Jugador nuevoJugador1 = new Jugador();
             Jugador nuevoJugador2 = new Jugador();
 
-            Partida partida = new (nuevoJugador1.Nombre, nuevoJugador2.Nombre);
+            Partida partida = new Partida();
 
             _ = partida.DefinirMano(nuevoJugador1, nuevoJugador2, 0);
         }
@@ -142,17 +142,7 @@ namespace LibreriaDeTesteo
             partida.CambiarMano(nuevoJugador1, nuevoJugador2);
         }
 
-        [ExpectedException(typeof(Exception))]
-        [TestMethod]
-        public void CambiarManoNulls()
-        {
-            Jugador nuevoJugador1 = null;
-            Jugador nuevoJugador2 = null;
 
-            Partida partida = new Partida(nuevoJugador1.Nombre, nuevoJugador2.Nombre);
-
-            partida.CambiarMano(nuevoJugador1, nuevoJugador2);
-        }
 
     }
 }

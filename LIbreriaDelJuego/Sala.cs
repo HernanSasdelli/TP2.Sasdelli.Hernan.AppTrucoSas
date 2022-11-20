@@ -16,7 +16,8 @@ namespace LIbreriaDelJuego
         public int salaActual;
         public static List<string> lista = new List<string>(); // era para el registro, al reemplazar definitivamente borrar
         private List<Naipe> mazoDeSala = new List<Naipe>();//memoria para copiar el maso de cartas
-
+        public bool estaVisible;
+        public bool terminoPartida;
 
         public CancellationTokenSource ctSource;       
         
@@ -34,11 +35,12 @@ namespace LIbreriaDelJuego
         {
             salaActual = nroSala++;
 
-            mazoDeSala = Naipe.CargarCartas();
+            mazoDeSala = SalonPrincipal.listaNaipePrincipal.ToList();
 
             ctSource = new CancellationTokenSource();
 
             nuevoJuego = new Task(JugarTruco);
+            
         }
 
         public Sala(Action<string> mostrarErrores) :this()   
@@ -69,132 +71,150 @@ namespace LIbreriaDelJuego
                 jugador2 = Jugador.LlamarUnJugador(SalonPrincipal.listaJugadores);
                 jugador1.cantar += MostrarJugada;
                 jugador2.cantar += MostrarJugada;
+
+
             }
             catch (Exception ex)
             {
                 mostrarErrores($"La sala{this.salaActual} dice:\n{ex.Message}");
+                this.ctSource.Cancel();
+                
             }
-
-                Jugador jugadorMano;
-                Jugador jugadorPie;
-
-                Partida nuevaPartida = new Partida(jugador1.Nombre,jugador2.Nombre);
-
-
-                int jugarALaGuerraDeCartas=0;
-                Naipe cartaMano;
-                Naipe cartaPie;
-            try
+            if(!ctSource.Token.IsCancellationRequested)
             {
-                jugador1.EsMano = true;
-                int mano = 1;
-                int jugada1 =0;
-                int jugada2 =0;
-                Thread.Sleep(2000);
+                Partida nuevaPartida = new Partida(jugador1.Nombre, jugador2.Nombre);
+                try
+                {
+                    Jugador jugadorMano;
+                    Jugador jugadorPie;
+                    
+                    
+                    int jugarALaGuerraDeCartas = 0;
+                    Naipe cartaMano;
+                    Naipe cartaPie;
 
-                jugada?.Invoke("-------Comienza la Partida------\n");
+                    jugador1.EsMano = true;
+                    int mano = 1;
+                    int jugada1 =0;
+                    int jugada2 =0;
+                    Thread.Sleep(500);
 
-                do
-                {               ///partida hasta sumar los puntos necesarios o sea cancelada     
-                                        {
-                                            jugada?.Invoke($"\n        ---------Mano{mano++}------\n");
-                                            jugada?.Invoke("");
+                    jugada?.Invoke("-------Comienza la Partida------\n");
 
-                                            jugadorMano = nuevaPartida.DefinirMano(jugador1, jugador2, 0);
-                                            jugadorPie = nuevaPartida.DefinirMano(jugador1, jugador2, 1);
-                                            Ronda nuevaRonda = new Ronda();
-                                ///reparto
-                                            jugadorMano.TresCarta = nuevaRonda.RepartirCartasPorJugador(mazoDeSala);
-                                                         jugada?.Invoke($"{jugadorMano.Nombre}, recibio {jugadorMano.TresCarta[0].NumeroNominal} de {jugadorMano.TresCarta[0].Palo}," +
-                                                         $"{jugadorMano.TresCarta[1].NumeroNominal} de {jugadorMano.TresCarta[1].Palo},{jugadorMano.TresCarta[2].NumeroNominal} de {jugadorMano.TresCarta[2].Palo}\n");
+                    do
+                    {               ///partida hasta sumar los puntos necesarios o sea cancelada     
+                                            {
+                                                jugada?.Invoke($"\n        ---------Mano{mano++}------\n");
+                                                jugada?.Invoke("");
 
-                                            jugadorPie.TresCarta = nuevaRonda.RepartirCartasPorJugador(mazoDeSala);
-                                                         jugada?.Invoke($"{jugadorPie.Nombre}, recibio {jugadorPie.TresCarta[0].NumeroNominal} de {jugadorPie.TresCarta[0].Palo}," +
-                                                         $"{jugadorPie.TresCarta[1].NumeroNominal} de {jugadorPie.TresCarta[1].Palo},{jugadorPie.TresCarta[2].NumeroNominal} de {jugadorPie.TresCarta[2].Palo}\n");
-                                //manos
-                                                                while (nuevaRonda.NroMano<4 && !ctSource.Token.IsCancellationRequested)
-                                                                {
-                                                                            //envido solo primera mano
-                                                                            if (nuevaRonda.NroMano == 1)
-                                                                            {
-                                                                                Thread.Sleep(1000);
-                                                                                jugada1 = jugadorMano.CantarEnvido(26, jugadorMano.CantoEnvido, jugadorMano.CantoFlor);
-                                                                                Thread.Sleep(1000);
-                                                                                jugada2 = jugadorPie.CantarEnvido(22, jugadorMano.CantoEnvido, jugadorMano.CantoFlor);
+                                                jugadorMano = nuevaPartida.DefinirMano(jugador1, jugador2, 0);
+                                                jugadorPie = nuevaPartida.DefinirMano(jugador1, jugador2, 1);
+                                                Ronda nuevaRonda = new Ronda();
+                                    ///reparto
+                                                jugadorMano.TresCarta = nuevaRonda.RepartirCartasPorJugador(mazoDeSala);
+                                                             jugada?.Invoke($"{jugadorMano.Nombre}, recibio {jugadorMano.TresCarta[0].NumeroNominal} de {jugadorMano.TresCarta[0].Palo}," +
+                                                             $"{jugadorMano.TresCarta[1].NumeroNominal} de {jugadorMano.TresCarta[1].Palo},{jugadorMano.TresCarta[2].NumeroNominal} de {jugadorMano.TresCarta[2].Palo}\n");
 
-                                                                                if (jugada2 == 2)
+                                                jugadorPie.TresCarta = nuevaRonda.RepartirCartasPorJugador(mazoDeSala);
+                                                             jugada?.Invoke($"{jugadorPie.Nombre}, recibio {jugadorPie.TresCarta[0].NumeroNominal} de {jugadorPie.TresCarta[0].Palo}," +
+                                                             $"{jugadorPie.TresCarta[1].NumeroNominal} de {jugadorPie.TresCarta[1].Palo},{jugadorPie.TresCarta[2].NumeroNominal} de {jugadorPie.TresCarta[2].Palo}\n");
+                                    //manos
+                                                                    while (nuevaRonda.NroMano<4 && !ctSource.Token.IsCancellationRequested)
+                                                                    {
+                                                                                //envido solo primera mano
+                                                                                if (nuevaRonda.NroMano == 1)
                                                                                 {
-                                                                                    Thread.Sleep(1000);
-                                                                                    jugada1 = jugadorMano.CantarEnvido(22, jugadorPie.CantoEnvido, jugadorPie.CantoFlor);
-                                                                                }
-                                                                                Envido.SumarPuntos(jugadorMano, jugadorPie, jugada1, jugada2, jugada);
+                                                                                    Thread.Sleep(500);
+                                                                                    jugada1 = jugadorMano.CantarEnvido(26, jugadorMano.CantoEnvido, jugadorMano.CantoFlor);
+                                                                                    Thread.Sleep(500);
+                                                                                    jugada2 = jugadorPie.CantarEnvido(22, jugadorMano.CantoEnvido, jugadorMano.CantoFlor);
+
+                                                                                    if (jugada2 == 2)
+                                                                                    {
+                                                                                        Thread.Sleep(1000);
+                                                                                        jugada1 = jugadorMano.CantarEnvido(22, jugadorPie.CantoEnvido, jugadorPie.CantoFlor);
+                                                                                    }
+                                                                                    Envido.SumarPuntos(jugadorMano, jugadorPie, jugada1, jugada2, jugada);
                                                                            
-                                                                                //truco(guerra de cartas)
-                                                                                jugada1 = jugadorMano.CantarTruco(10, jugadorMano.CantoTruco, jugadorMano.QuieroTruco);
-                                                                                jugada2 = jugadorPie.CantarTruco(8, jugadorMano.CantoTruco, jugadorMano.QuieroTruco);
+                                                                                    //truco(guerra de cartas)
+                                                                                    jugada1 = jugadorMano.CantarTruco(10, jugadorMano.CantoTruco, jugadorMano.QuieroTruco);
+                                                                                    jugada2 = jugadorPie.CantarTruco(8, jugadorMano.CantoTruco, jugadorMano.QuieroTruco);
 
-                                                                                if (jugada2 == 2)
-                                                                                {
-                                                                                    Thread.Sleep(1000);
-                                                                                    jugada1 = jugadorMano.CantarTruco(7, jugadorPie.CantoTruco, jugadorPie.QuieroTruco);
-                                                                                }
-                                                                            }           
+                                                                                    if (jugada2 == 2)
+                                                                                    {
+                                                                                        Thread.Sleep(500);
+                                                                                        jugada1 = jugadorMano.CantarTruco(7, jugadorPie.CantoTruco, jugadorPie.QuieroTruco);
+                                                                                    }
+                                                                                }           
 
-                                                                         jugarALaGuerraDeCartas = Truco.DefinirJugadas(jugada1, jugada2);
-                                                                        if (jugarALaGuerraDeCartas == 0)
-                                                                        {
+                                                                             jugarALaGuerraDeCartas = Truco.DefinirJugadas(jugada1, jugada2);
+                                                                            if (jugarALaGuerraDeCartas == 0)
+                                                                            {
  
-                                                                                Thread.Sleep(1000);
-                                                                                cartaMano = jugadorMano.JugarCartaMasAltaEnJuego();
-                                                                                jugada?.Invoke($"El jugador {jugadorMano.Nombre} jugó un {cartaMano.NumeroNominal} de {cartaMano.Palo}\n");
+                                                                                    Thread.Sleep(500);
+                                                                                    cartaMano = jugadorMano.JugarCartaMasAltaEnJuego();
+                                                                                    jugada?.Invoke($"El jugador {jugadorMano.Nombre} jugó un {cartaMano.NumeroNominal} de {cartaMano.Palo}\n");
 
-                                                                                Thread.Sleep(1000);
-                                                                                cartaPie = jugadorPie.JugarCartaMasAltaEnJuego();
-                                                                                jugada?.Invoke($"El jugador {jugadorPie.Nombre} jugó un {cartaPie.NumeroNominal} de {cartaPie.Palo}\n\n");
+                                                                                    Thread.Sleep(500);
+                                                                                    cartaPie = jugadorPie.JugarCartaMasAltaEnJuego();
+                                                                                    jugada?.Invoke($"El jugador {jugadorPie.Nombre} jugó un {cartaPie.NumeroNominal} de {cartaPie.Palo}\n\n");
 
-                                                                                ContadorPuntosMano(cartaMano, cartaPie, jugadorMano, jugadorPie);
-                                                                        }
+                                                                                    ContadorPuntosMano(cartaMano, cartaPie, jugadorMano, jugadorPie);
+                                                                            }
 
-                                                                        nuevaRonda.NroMano++;
+                                                                            nuevaRonda.NroMano++;
 
-                                                                }
-                                                                Thread.Sleep(1000);
-                                                                Truco.DefinirGanadorTruco(jugadorMano, jugadorPie, jugarALaGuerraDeCartas, jugada, jugada1, jugada2);
-                                                                jugada?.Invoke("");
+                                                                    }
+                                                                    Thread.Sleep(500);
+                                                                    Truco.DefinirGanadorTruco(jugadorMano, jugadorPie, jugarALaGuerraDeCartas, jugada, jugada1, jugada2);
+                                                                    jugada?.Invoke("");
 
-                                           nuevaRonda.NroMano=1;
-                                            nuevaPartida.CambiarMano(jugadorMano, jugadorPie);
-                                            nuevaRonda.irseAlMaso(jugador1, mazoDeSala);
-                                            nuevaRonda.irseAlMaso(jugador2, mazoDeSala);
+                                                nuevaRonda.NroMano=1;
+                                                nuevaPartida.CambiarMano(jugadorMano, jugadorPie);
+                                                nuevaRonda.irseAlMaso(jugador1, mazoDeSala);
+                                                nuevaRonda.irseAlMaso(jugador2, mazoDeSala);
 
-                                            jugadorMano.ResetearJugador();
-                                            jugadorPie.ResetearJugador();
+                                                jugadorMano.ResetearJugador();
+                                                jugadorPie.ResetearJugador();
 
 
-                                        }
-                                        if(!ctSource.Token.IsCancellationRequested && (jugadorMano.Puntaje >= 6 || jugadorPie.Puntaje >= 6))
-                                        {
-                                            jugada?.Invoke($"{DefinirGanador(jugadorMano, jugadorPie)} gana la partida\n");
+                                            }
+                                            if(!ctSource.Token.IsCancellationRequested && (jugadorMano.Puntaje >= 6 || jugadorPie.Puntaje >= 6))
+                                            {
+                                                Jugador ganador = DefinirGanador(jugadorMano, jugadorPie);
+                                                jugada?.Invoke($"{ganador.Nombre} gana la partida\n");
+                                                mostrarTerminadas($"La Partida {nuevaPartida.partidaActual} \ntermino con {ganador.Nombre} de Ganador\n--------\n");
 
-                                            jugador1.estaJugando = false;
-                                            jugador2.estaJugando = false;
-                                            mostrarTerminadas($"La Partida {nuevaPartida.partidaActual} \ntermino con {DefinirGanador(jugadorMano, jugadorPie)} de Ganador");
-                                            mostrarTerminadas($"\n--------\n");
-                                        }
-                                        else if(ctSource.Token.IsCancellationRequested)
-                                        {
-                                            jugada?.Invoke($"Partida Cancelada\n");
-                                            jugador1.estaJugando = false;
-                                            jugador2.estaJugando = false;
-                                            mostrarTerminadas($"La partida {nuevaPartida.partidaActual} fue cancelada\n");
-                                            mostrarTerminadas($"\n--------\n");
-                                        }
+                                                PConexionSQL nuevaConexion = new PConexionSQL();
+                                                nuevaConexion.GuardarDatos(ganador);
 
-                } while ((jugadorMano.Puntaje < 6 && jugadorPie.Puntaje < 6) && !ctSource.Token.IsCancellationRequested);
-            }
-            catch (Exception ex)
-            {
-                mostrarErrores($"La partida {nuevaPartida.partidaActual} dice:\n{ex.Message}");
+                                               /* PISerializadoraGenerica<Jugador> nuevoJsonJugadores = new PJsonSerializadora<Jugador>();
+                                                nuevoJsonJugadores.Escribir(ganador, "jugadoresGanadores");*/
+                                               
+                                                terminoPartida = true;
+                                                
+                                                 this.terminoPartida = true;
+                                            }
+                                            else if(ctSource.Token.IsCancellationRequested)
+                                            {
+                                                jugada?.Invoke($"Partida Cancelada\n");              
+                                                mostrarTerminadas($"La partida {nuevaPartida.partidaActual} fue cancelada\n--------\n");
+                                                
+                                                
+                                                 this.terminoPartida = true;
+                                             }
+
+                    } while ((jugadorMano.Puntaje < 6 && jugadorPie.Puntaje < 6) && !ctSource.Token.IsCancellationRequested);
+                    Jugador.ResetearJugadores(Jugador1, Jugador2);
+                    terminoPartida = true;
+                }
+                catch (Exception ex)
+                {              
+                    mostrarErrores($"La partida {nuevaPartida.partidaActual} dice:\n{ex.Message}");
+                    this.terminoPartida = true;
+                    Jugador.ResetearJugadores(Jugador1, Jugador2);
+                }
+
             }
 
         }
@@ -238,7 +258,7 @@ namespace LIbreriaDelJuego
         /// <param name="jugadorMano"></param>
         /// <param name="jugadorPie"></param>
         /// <returns></returns>Devuelve el nombre del jugador ganador
-        public string DefinirGanador(Jugador jugadorMano,Jugador jugadorPie)
+        public Jugador DefinirGanador(Jugador jugadorMano,Jugador jugadorPie)
         {
             if(jugadorMano!=null || jugadorPie!=null)
             {
@@ -247,12 +267,12 @@ namespace LIbreriaDelJuego
                     if (jugadorMano.Puntaje >= jugadorPie.Puntaje)
                     {
                         jugadorMano.PartidosGanados++;
-                        return jugadorMano.Nombre;
+                        return jugadorMano;
                     }
                     else
                     {
                         jugadorPie.PartidosGanados++;
-                        return jugadorPie.Nombre;
+                        return jugadorPie;
                     }
                 }
                 throw new Exception("ERROR!\nJugadores Incorrectos");

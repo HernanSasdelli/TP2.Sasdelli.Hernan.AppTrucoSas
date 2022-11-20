@@ -35,7 +35,6 @@
             this.lbl_error = new System.Windows.Forms.Label();
             this.rtb_mostrarPartidasTerminadas = new System.Windows.Forms.RichTextBox();
             this.lbl_partidasTerminadas = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dtg_listaSalas)).BeginInit();
             this.SuspendLayout();
             // 
@@ -81,21 +80,21 @@
             // lbl_error
             // 
             this.lbl_error.BackColor = System.Drawing.Color.White;
-            this.lbl_error.Font = new System.Drawing.Font("Serif Gothic Black", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lbl_error.Font = new System.Drawing.Font("Sony Sketch EF", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.lbl_error.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.lbl_error.Location = new System.Drawing.Point(93, 403);
             this.lbl_error.Name = "lbl_error";
             this.lbl_error.Size = new System.Drawing.Size(267, 72);
             this.lbl_error.TabIndex = 3;
             this.lbl_error.Text = "Errores";
-            this.lbl_error.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.lbl_error.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.lbl_error.Visible = false;
             // 
             // rtb_mostrarPartidasTerminadas
             // 
             this.rtb_mostrarPartidasTerminadas.Location = new System.Drawing.Point(454, 80);
             this.rtb_mostrarPartidasTerminadas.Name = "rtb_mostrarPartidasTerminadas";
-            this.rtb_mostrarPartidasTerminadas.Size = new System.Drawing.Size(306, 156);
+            this.rtb_mostrarPartidasTerminadas.Size = new System.Drawing.Size(306, 258);
             this.rtb_mostrarPartidasTerminadas.TabIndex = 4;
             this.rtb_mostrarPartidasTerminadas.Text = "";
             // 
@@ -111,16 +110,6 @@
             this.lbl_partidasTerminadas.TabIndex = 5;
             this.lbl_partidasTerminadas.Text = "Partidas Terminadas";
             // 
-            // button1
-            // 
-            this.button1.BackColor = System.Drawing.Color.DeepSkyBlue;
-            this.button1.Location = new System.Drawing.Point(531, 344);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(149, 56);
-            this.button1.TabIndex = 6;
-            this.button1.Text = "Estadisticas";
-            this.button1.UseVisualStyleBackColor = false;
-            // 
             // frm_salon
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
@@ -128,7 +117,6 @@
             this.BackColor = System.Drawing.Color.Firebrick;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.ClientSize = new System.Drawing.Size(843, 484);
-            this.Controls.Add(this.button1);
             this.Controls.Add(this.lbl_partidasTerminadas);
             this.Controls.Add(this.rtb_mostrarPartidasTerminadas);
             this.Controls.Add(this.lbl_error);
@@ -138,7 +126,9 @@
             this.Name = "frm_salon";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Truco SAS";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frm_salon_FormClosing);
             this.Load += new System.EventHandler(this.frm_salon_Load);
+            this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.frm_salon_MouseClick);
             ((System.ComponentModel.ISupportInitialize)(this.dtg_listaSalas)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -153,6 +143,5 @@
         private Label lbl_error;
         private RichTextBox rtb_mostrarPartidasTerminadas;
         private Label lbl_partidasTerminadas;
-        private Button button1;
     }
 }
